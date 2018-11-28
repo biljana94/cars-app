@@ -8,19 +8,19 @@
                 <br>
                 <div class="form-group row">
                     <label>Brand</label>
-                    <input v-model="newCar.brand" class="form-control" type="text" placeholder="Enter brand">
+                    <input v-model="newCar.brand" class="form-control" type="text" placeholder="Enter brand" minlength="2" required>
                 </div>
 
                 <div class="form-group row">
                     <label>Model</label>
-                    <input v-model="newCar.model" class="form-control" type="text" placeholder="Enter model">
+                    <input v-model="newCar.model" class="form-control" type="text" placeholder="Enter model" minlength="2" required>
                 </div>
 
                 <div class="form-group row">
                     <label>Year</label>
                     <select v-model="newCar.year" class="custom-select">
                         <!--v-for - iteriramo kroz niz years, mora i :value="" jer inace nece prepoznati niz-->
-                        <option v-for="(year, index) in years" :value="year" :key="index">{{year}}</option>
+                        <option v-for="(year, index) in years" :value="year" :key="index" required>{{year}}</option>
                     </select>
                 </div>
 
@@ -43,29 +43,29 @@
                     
                     <div class="form-check">
                         <!--moramo pisati value u radio buttons! ako ne budemo pisali, kad kliknemo 1 button, obelezice sve-->
-                        <input v-model="newCar.engine" value="Diesel" class="form-check-input" type="radio">
+                        <input v-model="newCar.engine" value="Diesel" class="form-check-input" type="radio" required>
                         <label class="form-check-label">Diesel</label>
                     </div>
 
                     <div class="form-check">
-                        <input v-model="newCar.engine" value="Petrol" class="form-check-input" type="radio">
+                        <input v-model="newCar.engine" value="Petrol" class="form-check-input" type="radio" required>
                         <label class="form-check-label">Petrol</label>
                     </div>
 
                     <div class="form-check">
-                        <input v-model="newCar.engine" value="Electric" class="form-check-input" type="radio">
+                        <input v-model="newCar.engine" value="Electric" class="form-check-input" type="radio" required>
                         <label class="form-check-label">Electric</label>
                     </div>
 
                     <div class="form-check">
-                        <input v-model="newCar.engine" value="Hybrid" class="form-check-input" type="radio">
+                        <input v-model="newCar.engine" value="Hybrid" class="form-check-input" type="radio" required>
                         <label class="form-check-label">Hybrid</label>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label>Number Of Doors</label>
-                    <input v-model="newCar.numberOfDoors" class="form-control" type="number" placeholder="Enter number of doors">
+                    <input v-model="newCar.numberOfDoors" class="form-control" type="number" placeholder="Enter number of doors" required>
                 </div>
 
                 
@@ -156,7 +156,7 @@ export default {
             this.newCar = {}; //vracamo prazan this.newCar da moze da nam vrati prazan
         },
 
-        //
+        //alert prozor sa trenutno unetim podacima iz forme pre submita
         previewFormInAlert() {
             let stringifyObj = JSON.stringify(this.newCar); //pravimo string od objekta this.newCar(koji se unosi pre submita) pomocu fnc JSON.stringify() ===> {"name":"John","age":30,"}
             let parseObj = JSON.parse(stringifyObj); //parsira objekat koji je string, na kraju cemo dobiti npr ovako: {"name":"John","age":30,"} ===> John, 30
