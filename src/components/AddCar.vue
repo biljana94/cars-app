@@ -73,6 +73,33 @@
                 <button type="submit" class="btn btn-primary">Add Car</button>
                 <!--button za resetovanje forme; tj vraca praznu formu; @click.stop.prevent="resetForm()" ovo moramo pisati jer smo u formi stavili dugme-->
                 <button @click.stop.prevent="resetForm()" type="button" class="btn btn-danger">Reset Form</button>
+
+                <!-- Button trigger modal -->
+                <button @click="previewFormInAlert()" type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">Preview</button>
+
+
+
+
+                <!-- Modal -->
+                <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Current Car Info</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                {{parseObj.brand}}
+                            </div>
+
+                        </div>
+                    </div>
+                </div> -->
+
             </form>
 
         </div>
@@ -127,7 +154,17 @@ export default {
         //resetujemo formu (ako onaj ko pise podatke nije dobro napisao i hoce sve ispocetka da pise moze da resetuje na dugme)
         resetForm() {
             this.newCar = {}; //vracamo prazan this.newCar da moze da nam vrati prazan
-        }
+        },
+
+        //
+        previewFormInAlert() {
+            let stringifyObj = JSON.stringify(this.newCar); //pravimo string od objekta this.newCar(koji se unosi pre submita) pomocu fnc JSON.stringify() ===> {"name":"John","age":30,"}
+            let parseObj = JSON.parse(stringifyObj); //parsira objekat koji je string, na kraju cemo dobiti npr ovako: {"name":"John","age":30,"} ===> John, 30
+
+            //parsirani objekat vracamo koji jos nije unet u bazu u alert prozoru
+            return alert(`Brand: ${parseObj.brand}\n Model: ${parseObj.model}\n Year: ${parseObj.year}\n Max Speed: ${parseObj.maxSpeed}\n ${parseObj.isAutomatic ? 'Automatic' : 'Manual'}\n Engine: ${parseObj.engine}\n Number Of Doors: ${parseObj.numberOfDoors}\n`
+            );
+        },
     }
 }
 </script>
