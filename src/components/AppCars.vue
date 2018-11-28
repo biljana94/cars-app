@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <br>
-        <h1>All Cars</h1>
+        <h1>Cars List</h1>
         <br>
         <table class="table table-dark">
             <thead>
@@ -42,11 +42,12 @@ export default {
         }
     },
 
+    //HOOK i Promise
     //created hook - u njemu pisemo promise; hook ne pozivamo, on nam sam vraca sva kola koja smo uneli
     created() {
         cars.getAll()
             .then(response => {
-                this.cars = response.data; //response nam je da vrati ta kola koja smo uneli
+                this.cars = response.data; //response - vraca listu kola
             })
             .catch(error => {
                 console.log(error); //catch nismo ni morali da pisemo
@@ -57,5 +58,12 @@ export default {
 
 <style>
 
+.container .table tr th {
+    color: #007bff;
+}
+
+.container .table tr td {
+    color: #e6f1ff;
+}
 
 </style>
