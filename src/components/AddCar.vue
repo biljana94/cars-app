@@ -70,7 +70,9 @@
 
                 
 
-                <button type="submit" class="btn btn-primary">Add car</button>
+                <button type="submit" class="btn btn-primary">Add Car</button>
+                <!--button za resetovanje forme; tj vraca praznu formu; @click.stop.prevent="resetForm()" ovo moramo pisati jer smo u formi stavili dugme-->
+                <button @click.stop.prevent="resetForm()" type="button" class="btn btn-danger">Reset Form</button>
             </form>
 
         </div>
@@ -114,10 +116,16 @@ export default {
             cars.add(this.newCar)
                 .then(() => {
                     this.$router.push('/cars'); //redirektovanje rute!!!!
+                    this.newCar = {};
                 })
                 .catch(error => { //catch ne moramo da pisemo uopste
                     console.log(error);
                 })
+            
+        },
+
+        //resetujemo formu (ako onaj ko pise podatke nije dobro napisao i hoce sve ispocetka da pise moze da resetuje na dugme)
+        resetForm() {
             this.newCar = {}; //vracamo prazan this.newCar da moze da nam vrati prazan
         }
     }
