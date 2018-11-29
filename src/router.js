@@ -12,6 +12,7 @@ const routes = [
     {path: '/', redirect: '/cars'},
     {path: '/cars', component: AppCars, name: 'cars'},
     {path: '/add', component: AddCar, name: 'add'},
+    {path: '/edit/:id', component: AddCar, name: 'edit-car'},
 ];
 
 export const router = new VueRouter({

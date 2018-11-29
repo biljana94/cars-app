@@ -4,7 +4,7 @@
 
             
             <!--FORMA ZA UNOS NOVIH KOLA-->
-            <form @submit.prevent="addCar()">
+            <form @submit.prevent="onSubmit()">
                 <br>
                 <div class="form-group row">
                     <label>Brand</label>
@@ -124,6 +124,8 @@ export default {
             newCar: {
                 isAutomatic: false, //default - menjamo ga na true kad cekiramo - v-model
             },
+
+            editing: false, //properti koji smo dodali da bi na submit ili promenio postojeca kola ili dodao nova kola
         }
     },
 
@@ -142,7 +144,7 @@ export default {
             // console.log(this.newCar)
             cars.add(this.newCar)
                 .then(() => {
-                    this.$router.push('/cars'); //redirektovanje rute!!!!
+                    this.$router.push({path: '/cars'}); //redirektovanje rute!!!!
                     this.newCar = {};
                 })
                 .catch(error => { //catch ne moramo da pisemo uopste
@@ -164,8 +166,51 @@ export default {
             //parsirani objekat vracamo koji jos nije unet u bazu u alert prozoru
             return alert(`Brand: ${parseObj.brand}\n Model: ${parseObj.model}\n Year: ${parseObj.year}\n Max Speed: ${parseObj.maxSpeed}\n ${parseObj.isAutomatic ? 'Automatic' : 'Manual'}\n Engine: ${parseObj.engine}\n Number Of Doors: ${parseObj.numberOfDoors}\n`
             );
+
+            // return alert(JSON.stringify(this.newCar)); //vraca kao objekat => {"name":"John","age":30,"}
         },
-    }
+
+        //menjamo podatke o kolima, pozivamo metodu iz carsService
+        editCar() {
+            cars.edit(this.$route.params.id, this.newCar)
+                .then(() => {
+                    this.$router.push({path: '/cars'}); //redirektovanje
+                })
+                .catch(error => { //ne mora catch
+                    console.log(error);
+                })
+        },
+
+        //na submit ako editujemo kola da promeni posle submita
+        //ili da doda nova kola ako dodajemo novi auto
+        //u ovoj metodi pozivamo metode iz ove komponente
+        onSubmit() {
+            if(this.editing) {
+                this.editCar(); //pozivamo metodu koja je u istoj komponenti sa 'this'
+            } else {
+                this.addCar(); //pozivamo metodu koja je u istoj komponenti sa 'this'
+            }
+        }
+    },
+
+
+    //created hook - kad hocemo da menjamo u formi kola koja smo vec uneli, moramo ovde jer vec uneta kola koja hocu da menjam moram u formu da ih dovucem
+    created() {
+        //IF STATEMENT - proveraca da li ima id taj, da nam u konzoli ne ispisuje gresku kad idemo na link Add
+            //u get() ne mogu da hvatam cist id(id), vec preko rute - hvatam id te rute
+        if(this.$route.params.id) {
+            cars.get(this.$route.params.id)
+            .then(response => {
+                this.editing = true;
+                this.newCar = response.data;
+            })
+            .catch(error => { //catch ne moramo da pisemo
+                console.log(error);
+            });
+        }
+
+        
+    },
 }
 </script>
 
@@ -190,6 +235,10 @@ export default {
 
 .container .row .form-group .form-check-label {
     color: #6c757d;
+}
+
+.btn {
+    margin: 0.25rem;
 }
 
 </style>
