@@ -72,7 +72,7 @@
 
                 <button type="submit" class="btn btn-primary">Add Car</button>
                 <!--button za resetovanje forme; tj vraca praznu formu; @click.stop.prevent="resetForm()" ovo moramo pisati jer smo u formi stavili dugme-->
-                <button @click.stop.prevent="resetForm()" type="button" class="btn btn-danger">Reset Form</button>
+                <button @click="resetForm()" type="button" class="btn btn-danger">Reset Form</button>
 
                 <!-- Button trigger modal -->
                 <button @click="previewFormInAlert()" type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">Preview</button>

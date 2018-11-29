@@ -70,15 +70,21 @@ export default {
     methods: {
         //brisemo auto sa tim 'id'
         deleteCar(id) {
-            cars.delete(id) //pozivamo fnc iz carsService
-                .then(response => {
-                    this.cars = this.cars.filter(car => { //filtriramo kola
-                        return car.id != id; //i vracamo listu kola bez kola koja imaju taj id, a koja smo obrisali(car.id != id)
-                    });
-                })
-                .catch(error => { //catch ne mora
-                    console.log(error);
-                })
+            //promptovanje - da li korisnik hoce(Yes) ili nece(No) da izbrise auto
+            let deleteCar = prompt('Are you sure you want to delete this car? Yes or No');
+            //ako korisnik u alert unese 'Yes' onda se kola brisu
+            if(deleteCar == 'Yes') {
+                cars.delete(id) //pozivamo fnc iz carsService
+                    .then(response => {
+                        this.cars = this.cars.filter(car => { //filtriramo kola
+                            return car.id != id; //i vracamo listu kola bez kola koja imaju taj id, a koja smo obrisali(car.id != id)
+                        });
+                    })
+                    .catch(error => { //catch ne mora
+                        console.log(error);
+                    })
+            }
+            
         }
     },
 
